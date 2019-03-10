@@ -43,8 +43,8 @@ public class MarketTest {
         driver.get("http://yandex.ru");
 
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
-        MarketPage marketPage = mainPage.openMarket();
 
+        MarketPage marketPage = mainPage.openMarket();
         marketPage.openElectronic();
 
         CatalogPage catalogPage = marketPage.openPhonePage();
@@ -65,8 +65,8 @@ public class MarketTest {
         driver.get("http://yandex.ru");
 
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
-        MarketPage marketPage = mainPage.openMarket();
 
+        MarketPage marketPage = mainPage.openMarket();
         marketPage.openElectronic();
 
         CatalogPage catalogPage = marketPage.openHeadphonePage();
