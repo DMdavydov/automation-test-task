@@ -35,7 +35,7 @@ public class MarketTest {
 
     @AfterMethod
     public void close() {
-        driver.close();
+        driver.quit();
     }
 
     @Test
