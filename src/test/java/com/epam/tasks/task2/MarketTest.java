@@ -42,7 +42,7 @@ public class MarketTest {
     public void phoneTest() throws InterruptedException {
         driver.get("http://yandex.ru");
 
-        MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
+        MainPage mainPage = new MainPage(driver);
 
         MarketPage marketPage = mainPage.openMarket();
         marketPage.openElectronic();
