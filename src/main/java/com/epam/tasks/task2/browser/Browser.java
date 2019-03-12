@@ -22,7 +22,6 @@ public class Browser {
         driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
         driver.manage().window().maximize();
         log.info("Driver initialized");
-        WebDriverWait wait = new WebDriverWait(driver, 5);
         return driver;
     }
 

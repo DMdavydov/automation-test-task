@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -23,10 +25,11 @@ import static org.assertj.core.api.Assertions.*;
 public class MarketTest {
     private static final Logger log = Logger.getLogger(MarketTest.class);
     private WebDriver driver;
-
+    private WebDriverWait wait;
     @BeforeMethod
     public void setUp() {
         driver = Browser.init();
+        wait = new WebDriverWait(driver, 5);
         driver.get("http://yandex.ru");
         assertThat(driver.getTitle()).isEqualTo("Яндекс");
         log.info("Yandex is opened");
@@ -46,11 +49,13 @@ public class MarketTest {
         marketPage.openElectronic();
 
         CatalogPage catalogPage = marketPage.openPhonePage();
+        WebElement firstPhone = catalogPage.getAllPhones().get(0);
         catalogPage.selectCheckBox("Samsung");
         catalogPage.setPriceFrom("40000");
-        Thread.sleep(3000);
 
-        WebElement firstPhone = catalogPage.getAllPhones().get(0);
+        wait.until(ExpectedConditions.stalenessOf(firstPhone));
+
+        firstPhone = catalogPage.getAllPhones().get(0);
         String phoneNameExpected = firstPhone.getText();
         firstPhone.click();
 
@@ -66,12 +71,14 @@ public class MarketTest {
         marketPage.openElectronic();
 
         CatalogPage catalogPage = marketPage.openHeadphonePage();
+        WebElement firstHeadphones = catalogPage.getAllHeadphones().get(0);
         catalogPage.selectCheckBox("Beats");
         catalogPage.setPriceFrom("17000");
         catalogPage.setPriceTo("25000");
-        Thread.sleep(3000);
 
-        WebElement firstHeadphones = catalogPage.getAllHeadphones().get(0);
+        wait.until(ExpectedConditions.stalenessOf(firstHeadphones));
+
+        firstHeadphones = catalogPage.getAllHeadphones().get(0);
         String headphonesNameExpected = firstHeadphones.getText();
         firstHeadphones.click();
 
