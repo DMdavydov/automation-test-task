@@ -1,7 +1,6 @@
 package listener;
 
 import io.qameta.allure.Attachment;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -9,9 +8,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 public class YandexListener implements ITestListener {
     private static WebDriver driver;
@@ -56,12 +53,10 @@ public class YandexListener implements ITestListener {
 
     }
 
-    @Attachment
-    private static void getScreenshot(String result) throws IOException
+    @Attachment(type = "image/png")
+    private static byte[] getScreenshot(String result) throws IOException
     {
-        File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(src, new File("files/fail_screenshots/" + result + "_"
-                + UUID.randomUUID() + ".png"));
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
 
 }
