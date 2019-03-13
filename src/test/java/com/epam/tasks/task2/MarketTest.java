@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static io.qameta.allure.Allure.step;
 
 public class MarketTest {
     private static final Logger log = Logger.getLogger(MarketTest.class);
@@ -41,16 +42,21 @@ public class MarketTest {
     public void phoneTest() {
         MainPage mainPage = new MainPage(driver);
 
+        step("Open market");
         MarketPage marketPage = mainPage.openMarket();
+        step("Open electronic");
         marketPage.openElectronic();
 
+        step("Open phones");
         CatalogPage catalogPage = marketPage.openPhonePage();
+        step("Set filter");
         WebElement firstPhone = catalogPage.getAllPhones().get(0);
         catalogPage.selectCheckBox("Samsung");
         catalogPage.setPriceFrom("40000");
 
         wait.until(ExpectedConditions.stalenessOf(firstPhone));
 
+        step("Open first phone");
         firstPhone = catalogPage.getAllPhones().get(0);
         String phoneNameExpected = firstPhone.getText();
         firstPhone.click();
@@ -63,10 +69,14 @@ public class MarketTest {
     public void headphoneTest() {
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
 
+        step("Open market");
         MarketPage marketPage = mainPage.openMarket();
+        step("Open electronic");
         marketPage.openElectronic();
 
+        step("Open headphones");
         CatalogPage catalogPage = marketPage.openHeadphonePage();
+        step("Set filter");
         WebElement firstHeadphones = catalogPage.getAllHeadphones().get(0);
         catalogPage.selectCheckBox("Beats");
         catalogPage.setPriceFrom("17000");
@@ -74,6 +84,7 @@ public class MarketTest {
 
         wait.until(ExpectedConditions.stalenessOf(firstHeadphones));
 
+        step("Open first headphone");
         firstHeadphones = catalogPage.getAllHeadphones().get(0);
         String headphonesNameExpected = firstHeadphones.getText();
         firstHeadphones.click();

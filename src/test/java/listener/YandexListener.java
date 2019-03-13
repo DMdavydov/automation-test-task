@@ -1,15 +1,20 @@
 package listener;
 
-import com.epam.tasks.task2.browser.Browser;
+import io.qameta.allure.Attachment;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class YandexListener implements ITestListener {
-    private Browser browser = new Browser();
-    private String filePath = "files/fail_screenshots";
+    private static WebDriver driver;
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
@@ -24,7 +29,7 @@ public class YandexListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         try {
-            browser.getScreenshot(result.getName());
+            getScreenshot(result.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,4 +55,13 @@ public class YandexListener implements ITestListener {
     public void onFinish(ITestContext iTestContext) {
 
     }
+
+    @Attachment
+    private static void getScreenshot(String result) throws IOException
+    {
+        File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(src, new File("files/fail_screenshots/" + result + "_"
+                + UUID.randomUUID() + ".png"));
+    }
+
 }
