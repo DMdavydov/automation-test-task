@@ -28,7 +28,7 @@ public class MarketTest {
         driver = Browser.init();
         wait = new WebDriverWait(driver, 5);
         driver.get("http://yandex.ru");
-        //assertThat(driver.getTitle()).isEqualTo("Яндекс");
+        assertThat(driver.getTitle()).isEqualTo("Яндекс");
         log.info("Yandex is opened");
     }
 
